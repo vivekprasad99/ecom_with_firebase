@@ -1,5 +1,8 @@
+import 'package:ecom_firebase/common/helper/navigator/app_navigator.dart';
 import 'package:ecom_firebase/core/configs/assets/app_vectors.dart';
 import 'package:ecom_firebase/core/configs/theme/app_colors.dart';
+import 'package:ecom_firebase/presentation/auth/pages/signin.dart';
+import 'package:ecom_firebase/presentation/home/pages/home.dart';
 import 'package:ecom_firebase/presentation/splash/bloc/splash_cubit.dart';
 import 'package:ecom_firebase/presentation/splash/bloc/splash_state.dart';
 import 'package:flutter/material.dart';

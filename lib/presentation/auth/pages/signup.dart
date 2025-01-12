@@ -1,6 +1,8 @@
 import 'package:ecom_firebase/common/helper/navigator/app_navigator.dart';
 import 'package:ecom_firebase/common/widgets/appbar/app_bar.dart';
 import 'package:ecom_firebase/common/widgets/button/basic_app_button.dart';
+import 'package:ecom_firebase/data/auth/models/user_creation_req.dart';
+import 'package:ecom_firebase/presentation/auth/pages/gender_and_age_selection.dart';
 import 'package:ecom_firebase/presentation/auth/pages/signin.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

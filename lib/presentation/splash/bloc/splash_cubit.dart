@@ -1,4 +1,6 @@
+import 'package:ecom_firebase/domain/auth/usecases/is_logged_in.dart';
 import 'package:ecom_firebase/presentation/splash/bloc/splash_state.dart';
+import 'package:ecom_firebase/service_locator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SplashCubit extends Cubit<SplashState> {
