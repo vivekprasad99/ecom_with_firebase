@@ -1,3 +1,4 @@
+import 'package:ecom_firebase/presentation/home/widgets/headers.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -9,8 +10,8 @@ class HomePage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Header(),
-            // SizedBox(height: 24,),
+            Header(),
+            SizedBox(height: 24,),
             // SearchField(),
             // SizedBox(height: 24,),
             // Categories(),

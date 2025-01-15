@@ -6,6 +6,7 @@ import 'package:ecom_firebase/domain/auth/usecases/signup.dart';
 import 'package:get_it/get_it.dart';
 
 import 'domain/auth/usecases/get_ages.dart';
+import 'domain/auth/usecases/get_user.dart';
 import 'domain/auth/usecases/send_password_reset_email.dart';
 import 'domain/auth/usecases/signin.dart';
 
@@ -36,5 +37,9 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<IsLoggedInUseCase>(
       IsLoggedInUseCase()
+  );
+
+  sl.registerSingleton<GetUserUseCase>(
+      GetUserUseCase()
   );
 }
