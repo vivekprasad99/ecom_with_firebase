@@ -7,12 +7,16 @@ import 'package:get_it/get_it.dart';
 
 import 'data/category/repository/category.dart';
 import 'data/category/source/category_firebase_service.dart';
+import 'data/product/repository/product.dart';
+import 'data/product/source/product_firebase_service.dart';
 import 'domain/auth/usecases/get_ages.dart';
 import 'domain/auth/usecases/get_user.dart';
 import 'domain/auth/usecases/send_password_reset_email.dart';
 import 'domain/auth/usecases/signin.dart';
 import 'domain/category/repository/category.dart';
 import 'domain/category/usecases/get_categories.dart';
+import 'domain/product/repository/product.dart';
+import 'domain/product/usecases/get_top_selling.dart';
 
 final sl = GetIt.instance;
 
@@ -24,12 +28,20 @@ Future<void> initializeDependencies() async {
       CategoryFirebaseServiceImpl()
   );
 
+  sl.registerSingleton<ProductFirebaseService>(
+      ProductFirebaseServiceImpl()
+  );
+
   // Repositories
 
   sl.registerSingleton<AuthRepository>(AuthRepositoryImpl());
 
   sl.registerSingleton<CategoryRepository>(
       CategoryRepositoryImpl()
+  );
+
+  sl.registerSingleton<ProductRepository>(
+      ProductRepositoryImpl()
   );
 
   // Usecases
@@ -58,4 +70,9 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GetCategoriesUseCase>(
       GetCategoriesUseCase()
   );
+
+  sl.registerSingleton<GetTopSellingUseCase>(
+      GetTopSellingUseCase()
+  );
+
 }
