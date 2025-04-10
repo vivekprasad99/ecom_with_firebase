@@ -17,12 +17,8 @@ class Header extends StatelessWidget {
     return BlocProvider(
       create: (context) => UserInfoDisplayCubit()..displayUserInfo(),
       child: Padding(
-        padding: const EdgeInsets.only(
-            top: 40,
-            right: 16,
-            left: 16
-        ),
-        child: BlocBuilder < UserInfoDisplayCubit, UserInfoDisplayState > (
+        padding: const EdgeInsets.only(top: 40, right: 16, left: 16),
+        child: BlocBuilder<UserInfoDisplayCubit, UserInfoDisplayState>(
           builder: (context, state) {
             if (state is UserInfoLoading) {
               return const Center(child: CircularProgressIndicator());
@@ -31,7 +27,7 @@ class Header extends StatelessWidget {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _profileImage(state.user,context),
+                  _profileImage(state.user, context),
                   _gender(state.user),
                   _card(context)
                 ],
@@ -44,9 +40,9 @@ class Header extends StatelessWidget {
     );
   }
 
-  Widget _profileImage(UserEntity user,BuildContext context) {
+  Widget _profileImage(UserEntity user, BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         // AppNavigator.push(context, const SettingsPage());
       },
       child: Container(
@@ -54,16 +50,13 @@ class Header extends StatelessWidget {
         width: 40,
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: user.image.isEmpty ?
-                AssetImage(
-                    AppImages.profile
-                ) : NetworkImage(
-                    user.image
-                )
+              image: user.image.isEmpty
+                  ? AssetImage(AppImages.profile) as ImageProvider
+                  : NetworkImage(user.image) as ImageProvider,
+              fit: BoxFit.cover,
             ),
             color: Colors.red,
-            shape: BoxShape.circle
-        ),
+            shape: BoxShape.circle),
       ),
     );
   }
@@ -71,20 +64,14 @@ class Header extends StatelessWidget {
   Widget _gender(UserEntity user) {
     return Container(
       height: 40,
-      padding: const EdgeInsets.symmetric(
-          horizontal: 16
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
           color: AppColors.secondBackground,
-          borderRadius: BorderRadius.circular(100)
-      ),
+          borderRadius: BorderRadius.circular(100)),
       child: Center(
         child: Text(
           user.gender == 1 ? 'Men' : 'Women',
-          style: const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 16
-          ),
+          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
         ),
       ),
     );
@@ -92,16 +79,14 @@ class Header extends StatelessWidget {
 
   Widget _card(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         // AppNavigator.push(context,const CartPage());
       },
       child: Container(
         height: 40,
         width: 40,
         decoration: const BoxDecoration(
-            color: AppColors.primary,
-            shape: BoxShape.circle
-        ),
+            color: AppColors.primary, shape: BoxShape.circle),
         child: SvgPicture.asset(
           AppVectors.bag,
           fit: BoxFit.none,
