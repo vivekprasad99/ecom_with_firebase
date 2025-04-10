@@ -2,9 +2,9 @@ name: Flutter CI/CD
 
 on:
   push:
-    branches: [ "master" ]  # Changed from "main" to "master"
+    branches: [ "master" ]
   pull_request:
-    branches: [ "master" ]  # Changed from "main" to "master"
+    branches: [ "master" ]
 
 jobs:
   build_ios:
@@ -48,7 +48,7 @@ jobs:
         run: flutter build apk --release
         
       - name: Upload APK
-        uses: actions/upload-artifact@v2.3.1
+        uses: actions/upload-artifact@v4
         with:
           name: release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
