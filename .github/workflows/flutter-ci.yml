@@ -16,7 +16,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.29.2'  # Updated to latest Flutter version
+          flutter-version: '3.29.2'
           channel: 'stable'
           
       - name: Install Flutter dependencies
@@ -29,8 +29,8 @@ jobs:
       - name: Build iOS
         run: flutter build ios --release --no-codesign
 
-  build_android:
-    name: Build Android
+  build_and_deploy_android:
+    name: Build & Deploy Android
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -38,15 +38,69 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.29.2'  # Updated to latest Flutter version
+          flutter-version: '3.29.2'
           channel: 'stable'
           
       - name: Install Flutter dependencies
         run: flutter pub get
+
+      # Setup Ruby for Fastlane
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+          bundler-cache: true
+      
+      # Decode base64 key into json file
+      - name: Decode service account key JSON
+        run: |
+          echo "${{ secrets.PLAY_STORE_CONFIG_JSON }}" > play-store-config.json.b64
+          base64 -d play-store-config.json.b64 > play-store-config.json
+      
+      # Decode Keystore
+      - name: Decode Keystore
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" > android/app/upload-keystore.jks.b64
+          base64 -d android/app/upload-keystore.jks.b64 > android/app/upload-keystore.jks
+      
+      # Create key.properties
+      - name: Create key.properties
+        run: |
+          echo "storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" > android/key.properties
+          echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
+          echo "storeFile=upload-keystore.jks" >> android/key.properties
         
-      - name: Build APK
-        run: flutter build apk --release
+      - name: Build Android App Bundle
+        run: flutter build appbundle --release
+
+      # Install and setup Fastlane
+      - name: Setup Fastlane
+        working-directory: android
+        run: |
+          gem install fastlane
+          fastlane init
+
+      # Create Fastfile
+      - name: Create Fastfile
+        run: |
+          echo 'default_platform(:android)
+          platform :android do
+            desc "Deploy to Play Store"
+            lane :deploy do
+              upload_to_play_store(
+                track: "internal",
+                json_key: "../play-store-config.json",
+                aab: "../build/app/outputs/bundle/release/app-release.aab"
+              )
+            end
+          end' > android/fastlane/Fastfile
+
+      # Deploy to Play Store
+      - name: Deploy to Play Store
+        working-directory: android
+        run: fastlane deploy
         
+      # Upload APK as artifact (optional)
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
