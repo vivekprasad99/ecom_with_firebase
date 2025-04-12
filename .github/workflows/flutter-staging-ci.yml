@@ -27,14 +27,14 @@ jobs:
       # Create staging google-services.json
       - name: Create Google Services JSON file
         run: |
-          echo "${{ secrets.FIREBASE_STAGING_GOOGLE_SERVICES_JSON }}" > android/app/google-services.json.b64
+          echo "${{ secrets.PLAY_STORE_CONFIG_JSON }}" > android/app/google-services.json.b64
           base64 --decode android/app/google-services.json.b64 > android/app/google-services.json
 
       - name: Create key.properties
         run: |
-          echo "storePassword=${{ secrets.ANDROID_STAGING_KEYSTORE_PASSWORD }}" > android/key.properties
-          echo "keyPassword=${{ secrets.ANDROID_STAGING_KEY_PASSWORD }}" >> android/key.properties
-          echo "keyAlias=${{ secrets.ANDROID_STAGING_KEY_ALIAS }}" >> android/key.properties
+          echo "storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" > android/key.properties
+          echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
           echo "storeFile=upload-keystore.jks" >> android/key.properties
         
       - name: Build Android App Bundle

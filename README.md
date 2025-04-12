@@ -16,3 +16,19 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 readme updatedddd
+
+
+// for staging 
+git add .
+git commit -m "New changes"
+git push origin master
+
+for prod
+# First commit your changes
+git add .
+git commit -m "Release changes"
+
+# Create and push a version tag
+git tag v1.0.0
+git push origin v1.0.0
+
