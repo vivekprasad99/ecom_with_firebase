@@ -80,7 +80,7 @@ jobs:
           echo 'json_key_file("../play-store-config.json")' > android/fastlane/Appfile
           echo 'package_name("com.example.ecom_firebase")' >> android/fastlane/Appfile
 
-      # Create Fastfile
+      # Create Fastfile with initial release track
       - name: Create Fastfile
         run: |
           echo 'default_platform(:android)
@@ -90,7 +90,8 @@ jobs:
               upload_to_play_store(
                 track: "internal",
                 json_key: "../play-store-config.json",
-                aab: "../build/app/outputs/bundle/release/app-release.aab"
+                aab: "../build/app/outputs/bundle/release/app-release.aab",
+                release_status: "draft"
               )
             end
           end' > android/fastlane/Fastfile
