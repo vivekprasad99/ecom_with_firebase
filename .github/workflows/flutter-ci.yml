@@ -73,16 +73,16 @@ jobs:
       - name: Build Android App Bundle
         run: flutter build appbundle --release
 
-      # Install and setup Fastlane
-      - name: Setup Fastlane
-        working-directory: android
+      # Create Appfile with package name
+      - name: Create Appfile
         run: |
-          gem install fastlane
-          fastlane init
+          echo 'json_key_file("../play-store-config.json")' > android/fastlane/Appfile
+          echo 'package_name("com.example.ecom_firebase")' >> android/fastlane/Appfile
 
       # Create Fastfile
       - name: Create Fastfile
         run: |
+          mkdir -p android/fastlane
           echo 'default_platform(:android)
           platform :android do
             desc "Deploy to Play Store"
@@ -94,6 +94,11 @@ jobs:
               )
             end
           end' > android/fastlane/Fastfile
+
+      # Skip fastlane init
+      - name: Setup Fastlane
+        working-directory: android
+        run: gem install fastlane
 
       # Deploy to Play Store
       - name: Deploy to Play Store
