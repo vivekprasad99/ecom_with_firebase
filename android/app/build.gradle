@@ -5,10 +5,30 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     namespace "com.example.ecom_firebase"
     compileSdkVersion 34
     
+    flavorDimensions "environment"
+    productFlavors {
+        prod {
+            dimension "environment"
+            applicationId "com.example.ecom_firebase"
+            resValue "string", "app_name", "Ecom Firebase"
+        }
+        staging {
+            dimension "environment"
+            applicationId "com.example.ecom_firebase.staging"
+            resValue "string", "app_name", "Ecom Firebase (Staging)"
+        }
+    }
+
     defaultConfig {
         applicationId "com.example.ecom_firebase"
         minSdk 23
@@ -17,9 +37,20 @@ android {
         versionName "1.0.0"
     }
 
+    signingConfigs {
+        release {
+            if (keystorePropertiesFile.exists()) {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+            }
+        }
+    }
+
     buildTypes {
         release {
-            signingConfig signingConfigs.debug
+            signingConfig keystorePropertiesFile.exists() ? signingConfigs.release : signingConfigs.debug
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

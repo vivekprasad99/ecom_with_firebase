@@ -85,8 +85,8 @@ class Header extends StatelessWidget {
       child: Container(
         height: 40,
         width: 40,
-        decoration: const BoxDecoration(
-            color: AppColors.primary, shape: BoxShape.circle),
+        decoration:
+            BoxDecoration(color: AppColors.primary, shape: BoxShape.circle),
         child: SvgPicture.asset(
           AppVectors.bag,
           fit: BoxFit.none,

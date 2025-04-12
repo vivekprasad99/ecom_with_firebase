@@ -1,0 +1,67 @@
+name: Flutter Staging CI/CD
+
+on:
+  push:
+    branches: [ "master" ]
+    tags-ignore:
+      - 'v*'  # Ignore version tags (used for prod)
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  build_and_deploy_android:
+    name: Build & Deploy Android (Staging)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.29.2'
+          channel: 'stable'
+          
+      - name: Install Flutter dependencies
+        run: flutter pub get
+
+      # Create staging google-services.json
+      - name: Create Google Services JSON file
+        run: |
+          echo "${{ secrets.FIREBASE_STAGING_GOOGLE_SERVICES_JSON }}" > android/app/google-services.json.b64
+          base64 --decode android/app/google-services.json.b64 > android/app/google-services.json
+
+      - name: Create key.properties
+        run: |
+          echo "storePassword=${{ secrets.ANDROID_STAGING_KEYSTORE_PASSWORD }}" > android/key.properties
+          echo "keyPassword=${{ secrets.ANDROID_STAGING_KEY_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.ANDROID_STAGING_KEY_ALIAS }}" >> android/key.properties
+          echo "storeFile=upload-keystore.jks" >> android/key.properties
+        
+      - name: Build Android App Bundle
+        run: flutter build appbundle --flavor staging -t lib/main_staging.dart --release
+
+      # Create Fastlane files for staging
+      - name: Create Fastlane files
+        run: |
+          mkdir -p android/fastlane
+          echo 'json_key_file("../play-store-staging-config.json")' > android/fastlane/Appfile
+          echo 'package_name("com.example.ecom_firebase.staging")' >> android/fastlane/Appfile
+
+      - name: Create Fastfile
+        run: |
+          echo 'default_platform(:android)
+          platform :android do
+            desc "Deploy to Play Store"
+            lane :deploy do
+              upload_to_play_store(
+                track: "internal",
+                json_key: "../play-store-staging-config.json",
+                aab: "../build/app/outputs/bundle/stagingRelease/app-staging-release.aab",
+                release_status: "draft"
+              )
+            end
+          end' > android/fastlane/Fastfile
+
+      - name: Deploy to Play Store
+        working-directory: android
+        run: fastlane deploy
