@@ -1,0 +1,2 @@
+/Volumes/T7/development/ecom_with_firebase/android/app/.cxx/RelWithDebInfo/28291227/x86/CMakeFiles/edit_cache.dir
+/Volumes/T7/development/ecom_with_firebase/android/app/.cxx/RelWithDebInfo/28291227/x86/CMakeFiles/rebuild_cache.dir
