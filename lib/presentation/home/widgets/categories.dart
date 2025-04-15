@@ -1,7 +1,6 @@
 import 'package:ecom_firebase/common/bloc/categories/categories_display_cubit.dart';
 import 'package:ecom_firebase/common/bloc/categories/categories_display_state.dart';
 import 'package:ecom_firebase/common/helper/images/image_display.dart';
-import 'package:ecom_firebase/common/helper/navigator/app_navigator.dart';
 import 'package:ecom_firebase/domain/category/entity/category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -4,7 +4,6 @@ import 'package:ecom_firebase/common/widgets/product/product_card.dart';
 import 'package:ecom_firebase/domain/product/entities/product.dart';
 import 'package:ecom_firebase/domain/product/usecases/get_top_selling.dart';
 import 'package:ecom_firebase/service_locator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

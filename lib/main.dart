@@ -40,7 +40,6 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.dark(
             primary: AppColors.primary,
             secondary: AppColors.accent,
-            background: AppColors.background,
             surface: AppColors.secondBackground,
           ),
           textTheme: TextTheme(

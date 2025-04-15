@@ -1,9 +1,7 @@
-import 'package:ecom_firebase/common/helper/navigator/app_navigator.dart';
 import 'package:ecom_firebase/domain/product/entities/product.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/configs/theme/app_colors.dart';
-import '../../helper/images/image_display.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductEntity productEntity;

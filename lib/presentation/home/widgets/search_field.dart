@@ -1,4 +1,3 @@
-import 'package:ecom_firebase/common/helper/navigator/app_navigator.dart';
 import 'package:ecom_firebase/core/configs/assets/app_vectors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

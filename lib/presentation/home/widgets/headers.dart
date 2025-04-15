@@ -1,4 +1,3 @@
-import 'package:ecom_firebase/common/helper/navigator/app_navigator.dart';
 import 'package:ecom_firebase/core/configs/assets/app_images.dart';
 import 'package:ecom_firebase/core/configs/assets/app_vectors.dart';
 import 'package:ecom_firebase/core/configs/theme/app_colors.dart';
