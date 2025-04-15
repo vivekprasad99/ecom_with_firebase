@@ -9,25 +9,6 @@
       "client_info": {
         "mobilesdk_app_id": "1:322711153027:android:dde1d94a4c586bdbcdeeb6",
         "android_client_info": {
-          "package_name": "com.example.ecom_firebase"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyB_9r-2nv3sRiMhxhYqz1Atv-pTUkJ6hrI"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:322711153027:android:dde1d94a4c586bdbcdeeb6",
-        "android_client_info": {
           "package_name": "com.example.ecom_firebase.staging"
         }
       },
